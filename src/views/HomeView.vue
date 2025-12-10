@@ -20,7 +20,9 @@
           2. 目前沒有事項也沒有未完成事項
         -->
         <v-btn :disabled="status ===STATUS.COUNTING || (list.currentItem.length === 0 && list.items.length === 0)" icon="mdi-play" @click="startTimer" />
+        <!-- 只有倒數鐘才能暫停 -->
         <v-btn :disabled="status !== STATUS.COUNTING" icon="mdi-pause" @click="pause" />
+        <!-- 目前有事項才能跳過 -->
         <v-btn :disabled="list.currentItem.length === 0" icon="mdi-skip-next" @click="finish" />
       </v-col>
     </v-row>
@@ -58,7 +60,7 @@
     // 如果是停止狀態下開始，而且有待辦事項
     // 從待辦事項裡取出第一個，放入目前事項
     if (status.value === STATUS.STOP && list.items.length > 0 && list.currentItem === '') {
-      list.currentItem = list.items.shift().text
+      list.currentItem = time.isBreakTime ? '休息' : list.items.shift().text
     }
 
     status.value = STATUS.COUNTING
