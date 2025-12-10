@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia'
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
 
 export const useListStore = defineStore('list', () => {
   // 待辦事項
-  const items = reactive([])
+  const items = ref([])
   // 已完成事項
-  const finishedItems = reactive([])
+  const finishedItems = ref([])
   // 目前進行中事項
   const currentItem = ref('')
 
@@ -17,4 +17,8 @@ export const useListStore = defineStore('list', () => {
     currentItem,
     id,
   }
+}, {
+  persist: {
+    key: 'pomodoro-list',
+  },
 })
