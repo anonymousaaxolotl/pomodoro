@@ -15,7 +15,7 @@ const router = createRouter({
       name: 'Home',
       component: () => import('@/views/HomeView.vue'),
       meta: {
-        title: '首頁',
+        title: '番茄鐘 | 首頁',
       },
     },
     {
@@ -23,7 +23,7 @@ const router = createRouter({
       name: 'list',
       component: () => import('@/views/ListView.vue'),
       meta: {
-        title: '事項',
+        title: '番茄鐘 | 事項',
       },
     },
     {
@@ -31,7 +31,7 @@ const router = createRouter({
       name: 'settings',
       component: () => import('@/views/SettingsView.vue'),
       meta: {
-        title: '設定',
+        title: '番茄鐘 | 設定',
       },
     },
   ],

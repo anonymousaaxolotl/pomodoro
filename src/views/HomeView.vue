@@ -6,7 +6,7 @@
       </v-col>
       <v-divider />
       <v-col class="text-center" cols="12">
-        <DigitNumber v-for="(data, idx) in timeleftText" :key="idx" color="white" :data="data" />
+        <DigitNumber v-for="(data, idx) in timeleftText" :key="idx" color="gray" :data="data" />
 
         <!--
         <p>{{ time.timeleft }}</p>
@@ -83,22 +83,33 @@
     audio.src = settings.selectedAlarm.file
     audio.play()
 
-    useWebNotification({
+    const { show, isSupported, permissionGranted } = useWebNotification({
       title: '事項完成',
       body: list.currentItem,
-      icon: new URL('@/assets/pomodoro-technique.png, import.meta.url').href,
+      icon: new URL('@/assets/pomodoro-technique.png', import.meta.url).href,
     })
     if (isSupported.value && permissionGranted.value) {
       show()
     }
 
-    list.finishedItems.push({
-      id: list.id++,
-      text: list.currentItem,
-    })
+    if (!time.isBreakTime) {
+      list.finishedItems.push({
+        id: list.id++,
+        text: list.currentItem,
+      })
+    }
 
     list.currentItem = ''
-    time.timeleft = time.TIME
+
+    if (list.items.length > 0) {
+      time.isBreakTime = !time.isBreakTime
+    }
+
+    time.timeleft = time.isBreakTime ? time.TIME_BREAK : time.TIME
+
+    if (list.items.length > 0) {
+      startTimer()
+    }
   }
 
   const pause = () => {
